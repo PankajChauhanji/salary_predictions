@@ -1,7 +1,13 @@
+"""Scrapping is done using selenium which.
+   Source of selenium scrapper user: https://towardsdatascience.com/selenium-tutorial-scraping-glassdoor-com-in-10-minutes-3d0915c6d905
+   Github Link: https://github.com/arapfaik/scraping-glassdoor-selenium
+   """
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium import webdriver
 import time
 import pandas as pd
+
+
 def get_jobs(keyword, num_jobs, verbose, path, slp_time):
     
     '''Gathers jobs as a dataframe, scraped from Glassdoor'''
@@ -33,13 +39,13 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
         except ElementClickInterceptedException:
             pass
 
-        time.sleep(slp_time)
+        time.sleep(.1)
 
         try:
-            driver.find_element_by_css_selector('[alt="Close"]').click()  #clicking to the X.
-            print("It outperformed")
+            driver.find_element_by_css_selector('[alt="Close"]').click() #clicking to the X.
+            print(' Scrapping is working.')
         except NoSuchElementException:
-            print("It failed")
+            print(' scrapping is not working.')
             pass
 
         
@@ -66,7 +72,6 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
                     time.sleep(5)
 
             try:
-                #salary_estimate = driver.find_element_by_xpath('.//span[@class="margVertXs"]').text
                 salary_estimate = driver.find_element_by_xpath('.//span[@class="gray salary"]').text
             except NoSuchElementException:
                 salary_estimate = -1 #You need to set a "not found value. It's important."
@@ -172,7 +177,8 @@ def get_jobs(keyword, num_jobs, verbose, path, slp_time):
             "Revenue" : revenue,
             "Competitors" : competitors})
             #add job to jobs
-
+            
+            
         #Clicking on the "next page" button
         try:
             driver.find_element_by_xpath('.//li[@class="next"]//a').click()
