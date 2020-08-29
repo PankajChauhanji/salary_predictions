@@ -5,6 +5,7 @@ step2: save that data as csv file.
 import data_scrapper as ds 
 import pandas as pd 
 
+#   path where chrome driver is installed. 
 path = "C:/Users/pankaj/Documents/salary_prediction/chromedriver"
 
 df = ds.get_jobs('data scientist',10, False, path, 15)
